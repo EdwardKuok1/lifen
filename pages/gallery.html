@@ -220,6 +220,71 @@
         display: block;
       }
 
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(2, 2, 10, 0.85);
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 220ms ease;
+        z-index: 10;
+      }
+
+      .lightbox.is-open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .lightbox__content {
+        max-width: min(900px, 90vw);
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .lightbox__image {
+        width: 100%;
+        max-height: 75vh;
+        object-fit: contain;
+        border-radius: 1rem;
+        box-shadow: 0 25px 55px rgba(0, 0, 0, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.3);
+      }
+
+      .lightbox__title {
+        margin: 0;
+        font-size: 1.5rem;
+        letter-spacing: 0.05em;
+      }
+
+      .lightbox__meta {
+        margin: 0;
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.75);
+      }
+
+      .lightbox__close {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        background: rgba(5, 5, 12, 0.6);
+        color: #ffffff;
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
+
       .pill {
         display: inline-flex;
         align-items: center;
@@ -294,6 +359,15 @@
 
       <section class="gallery-grid" id="gallery-grid" aria-live="polite"></section>
     </main>
+
+    <div class="lightbox" id="lightbox" aria-modal="true" role="dialog">
+      <button class="lightbox__close" type="button" aria-label="Close preview">&times;</button>
+      <div class="lightbox__content">
+        <img class="lightbox__image" alt="" />
+        <h2 class="lightbox__title"></h2>
+        <p class="lightbox__meta"></p>
+      </div>
+    </div>
 
     <script>
       const galleryManifest = [
@@ -501,8 +575,8 @@
         } else {
           galleryGrid.innerHTML = galleryManifest
             .map(
-              (work) => `
-                <figure class="gallery-card">
+              (work, index) => `
+                <figure class="gallery-card" data-work-index="${index}" tabindex="0">
                   <div class="gallery-frame">
                     <img src="${work.src}" alt="${work.title}" loading="lazy" />
                   </div>
@@ -515,6 +589,59 @@
               `
             )
             .join("");
+
+          const lightbox = document.getElementById("lightbox");
+          const lightboxImage = lightbox.querySelector(".lightbox__image");
+          const lightboxTitle = lightbox.querySelector(".lightbox__title");
+          const lightboxMeta = lightbox.querySelector(".lightbox__meta");
+          const closeButton = lightbox.querySelector(".lightbox__close");
+
+          const openLightbox = (index) => {
+            const work = galleryManifest[index];
+            if (!work) return;
+            lightboxImage.src = work.src;
+            lightboxImage.alt = work.title;
+            lightboxTitle.textContent = work.title;
+            lightboxMeta.textContent = work.description;
+            lightbox.classList.add("is-open");
+            closeButton.focus();
+            document.body.style.overflow = "hidden";
+          };
+
+          const closeLightbox = () => {
+            lightbox.classList.remove("is-open");
+            lightboxImage.src = "";
+            document.body.style.overflow = "";
+          };
+
+          galleryGrid.addEventListener("click", (event) => {
+            const card = event.target.closest(".gallery-card");
+            if (!card) return;
+            const index = Number(card.dataset.workIndex);
+            openLightbox(index);
+          });
+
+          galleryGrid.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter" && event.key !== " ") return;
+            const card = event.target.closest(".gallery-card");
+            if (!card) return;
+            event.preventDefault();
+            const index = Number(card.dataset.workIndex);
+            openLightbox(index);
+          });
+
+          closeButton.addEventListener("click", closeLightbox);
+          lightbox.addEventListener("click", (event) => {
+            if (event.target === lightbox) {
+              closeLightbox();
+            }
+          });
+
+          document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+              closeLightbox();
+            }
+          });
         }
       }
     </script>
