@@ -44,7 +44,6 @@
         color: #f8f8ff;
         transition: background 120ms ease-out;
         background-attachment: initial;
-        overflow: hidden;
       }
 
       body::before {
@@ -141,18 +140,25 @@
         transform: scaleX(1);
       }
 
+      .content {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 7rem 0 4rem;
+      }
+
       main {
         text-align: center;
-        padding: 7rem 1.5rem 4rem;
+        padding: 0 1.5rem;
         max-width: 960px;
         width: min(960px, 100%);
-        margin: 0 auto;
         z-index: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1.25rem;
-        flex: 1;
+        max-height: calc(100vh - 5rem);
         overflow-y: auto;
         overflow-x: hidden;
         scrollbar-width: thin;
@@ -175,9 +181,8 @@
       .identity-grid {
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 1.5rem;
-        align-items: stretch;
       }
 
       .profile-card {
@@ -213,7 +218,8 @@
         max-width: 720px;
       }
 
-      .info-card {
+      .info-card,
+      .story-card {
         padding: 1.5rem;
         border-radius: 1.5rem;
         background: rgba(5, 5, 12, 0.6);
@@ -225,19 +231,22 @@
         gap: 1rem;
       }
 
-      .info-card small {
+      .info-card small,
+      .story-card small {
         font-size: 0.75rem;
         letter-spacing: 0.3em;
         text-transform: uppercase;
         color: rgba(255, 255, 255, 0.55);
       }
 
-      .info-card img {
+      .info-card img,
+      .story-card img {
         width: 100%;
         border-radius: 1rem;
         border: 1px solid rgba(255, 255, 255, 0.12);
       }
 
+      .info-meta,
       .location-meta {
         font-size: 0.95rem;
         color: rgba(255, 255, 255, 0.72);
@@ -448,30 +457,43 @@
       </nav>
     </header>
 
-    <main>
-      <section class="identity-grid" aria-label="Identity and location">
-        <figure class="profile-card">
-          <img src="../img/profile.png" alt="Portrait of Li-Fen" />
-          <figcaption>Li-Fen Studio</figcaption>
-        </figure>
+    <div class="content">
+      <main>
+        <section class="identity-grid" aria-label="Identity and location">
+          <figure class="profile-card">
+            <img src="../img/deng-li-fen.jpeg" alt="Portrait of Deng Li-Fen" />
+            <figcaption>Li-Fen Studio</figcaption>
+          </figure>
 
-        <article class="info-card">
-          <img src="../img/googleearth.png" alt="Studio location preview from Google Earth" />
-          <div>
-            <small>Studio address</small>
-            <h3>Li-Fen Collective HQ</h3>
-            <p class="location-meta">
-              柔佛 · 新山｜Taman Molek<br />
-              社区活动、营会策划与厨房实验的临时指挥中心。
-            </p>
-          </div>
-          <a class="cta secondary" href="https://earth.google.com/" target="_blank" rel="noreferrer"
-            >Open in Google Earth</a
-          >
-        </article>
-      </section>
+          <article class="story-card">
+            <img src="../img/profile.png" alt="Li-Fen profile storyboard" />
+            <div>
+              <small>Identity deck</small>
+              <h3>生而搞事 · All in</h3>
+              <p class="info-meta">
+                这张视觉是 Li-Fen 的自我说明书：主厨、指挥、运动员、组织者。用一整个 mood board
+                去记录她的火力与频道。
+              </p>
+            </div>
+          </article>
 
-      <section class="hero-copy">
+          <article class="info-card">
+            <img src="../img/googleearth.png" alt="Studio location preview from Google Earth" />
+            <div>
+              <small>Studio address</small>
+              <h3>Li-Fen Collective HQ</h3>
+              <p class="location-meta">
+                柔佛 · 新山｜Taman Molek<br />
+                社区活动、营会策划与厨房实验的临时指挥中心。
+              </p>
+            </div>
+            <a class="cta secondary" href="https://earth.google.com/" target="_blank" rel="noreferrer"
+              >Open in Google Earth</a
+            >
+          </article>
+        </section>
+
+        <section class="hero-copy">
         <p class="eyebrow">Curated chaos · 2025</p>
         <h1>丽芬姐搞事情</h1>
         <p>
@@ -482,37 +504,38 @@
           大学铁饼比赛冠军<br />
           生活营 · 主厨：第一次煮饭，一百多人的饭没有煮焦
         </p>
-      </section>
+        </section>
 
-      <section class="gallery-preview" aria-label="Gallery preview">
-        <div class="slideshow-frame">
-          <img
-            data-slideshow-image
-            src="../slideshow/互动.png"
-            alt="互动"
-          />
-          <div class="slideshow-overlay">
-            <p class="slide-label">Gallery preview</p>
-            <p class="slide-title" data-slide-title>互动</p>
-            <p class="slide-counter" data-slide-counter>01 / 06</p>
-            <div class="slideshow-progress" aria-hidden="true">
-              <span></span>
+        <section class="gallery-preview" aria-label="Gallery preview">
+          <div class="slideshow-frame">
+            <img
+              data-slideshow-image
+              src="../slideshow/互动.png"
+              alt="互动"
+            />
+            <div class="slideshow-overlay">
+              <p class="slide-label">Gallery preview</p>
+              <p class="slide-title" data-slide-title>互动</p>
+              <p class="slide-counter" data-slide-counter>01 / 06</p>
+              <div class="slideshow-progress" aria-hidden="true">
+                <span></span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="slideshow-actions">
-          <div class="slideshow-controls">
-            <button class="slide-control" data-slide-control="prev" aria-label="Previous artwork">
-              &#8249;
-            </button>
-            <button class="slide-control" data-slide-control="next" aria-label="Next artwork">
-              &#8250;
-            </button>
+          <div class="slideshow-actions">
+            <div class="slideshow-controls">
+              <button class="slide-control" data-slide-control="prev" aria-label="Previous artwork">
+                &#8249;
+              </button>
+              <button class="slide-control" data-slide-control="next" aria-label="Next artwork">
+                &#8250;
+              </button>
+            </div>
+            <a class="cta secondary" href="gallery.html">More</a>
           </div>
-          <a class="cta secondary" href="gallery.html">More</a>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </div>
 
     <script>
       const root = document.documentElement;

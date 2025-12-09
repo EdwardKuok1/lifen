@@ -22,7 +22,7 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
         background-color: #020203;
         background-image:
           radial-gradient(
@@ -43,8 +43,6 @@
           linear-gradient(135deg, #03030a, #050312 40%, #020203 80%);
         color: #f8f8ff;
         transition: background 120ms ease-out;
-        background-attachment: initial;
-        overflow: hidden;
       }
 
       body::before,
@@ -141,9 +139,16 @@
         transform: scaleX(1);
       }
 
+      .content {
+        flex: 1;
+        padding: 7rem 0 4rem;
+        display: flex;
+        justify-content: center;
+      }
+
       main {
         text-align: center;
-        padding: 7rem 2rem 4rem;
+        padding: 0 2rem;
         max-width: 1080px;
         width: min(1080px, 100%);
         margin: 0 auto;
@@ -151,7 +156,6 @@
         display: flex;
         flex-direction: column;
         gap: 2rem;
-        flex: 1;
         overflow-y: auto;
         overflow-x: hidden;
         scrollbar-width: thin;
@@ -362,17 +366,19 @@
       </nav>
     </header>
 
-    <main>
-      <section class="intro">
-        <p class="eyebrow">Museum log</p>
-        <h1>Li-Fen Exhibition Chronicle</h1>
-        <p>
-          一墙一景，都是丽芬姐的舞台。沉浸式的视觉档案室里，放大每一次活动、每一句口号、每一个眼神，用光影做纪念。
-        </p>
-      </section>
+    <div class="content">
+      <main>
+        <section class="intro">
+          <p class="eyebrow">Museum log</p>
+          <h1>Li-Fen Exhibition Chronicle</h1>
+          <p>
+            一墙一景，都是丽芬姐的舞台。沉浸式的视觉档案室里，放大每一次活动、每一句口号、每一个眼神，用光影做纪念。
+          </p>
+        </section>
 
-      <section class="gallery-grid" id="gallery-grid" aria-live="polite"></section>
-    </main>
+        <section class="gallery-grid" id="gallery-grid" aria-live="polite"></section>
+      </main>
+    </div>
 
     <div class="lightbox" id="lightbox" aria-modal="true" role="dialog">
       <button class="lightbox__close" type="button" aria-label="Close preview">&times;</button>
