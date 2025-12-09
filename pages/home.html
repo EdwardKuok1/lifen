@@ -471,6 +471,7 @@
         { src: "../slideshow/开席喽.png", title: "开席喽" },
         { src: "../slideshow/彻底裂开.png", title: "彻底裂开" },
         { src: "../slideshow/考试喽！.png", title: "考试喽！" },
+        { src: "../slideshow/设备问题.png", title: "设备问题" },
         { src: "../slideshow/这轮粗.png", title: "这轮粗" }
       ];
 
@@ -488,47 +489,62 @@
         const DELAY = 5000;
         let slideTimer;
 
+        const animateProgress = () => {
+          if (!progressFill) return;
+          progressFill.style.transition = "none";
+          progressFill.style.transform = "scaleX(0)";
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              progressFill.style.transition = `transform ${DELAY}ms linear`;
+              progressFill.style.transform = "scaleX(1)";
+            });
+          });
+        };
+
         const setSlide = (index) => {
           slideIndex = (index + slides.length) % slides.length;
           const { src, title } = slides[slideIndex];
           slideshowImage.style.opacity = 0;
-          requestAnimationFrame(() => {
-            slideshowImage.onload = () => {
-              slideshowImage.style.opacity = 1;
-            };
-            slideshowImage.src = src;
-            slideshowImage.alt = `${title} 预览`;
-            slideTitle.textContent = title;
-            slideCounter.textContent = formatCounter(slideIndex);
-            if (progressFill) {
-              progressFill.style.transform = `scaleX(${(slideIndex + 1) / slides.length})`;
-            }
-          });
+          slideshowImage.onload = () => {
+            slideshowImage.style.opacity = 1;
+          };
+          slideshowImage.src = src;
+          slideshowImage.alt = `${title} 展示图`;
+          slideTitle.textContent = title;
+          slideCounter.textContent = formatCounter(slideIndex);
         };
 
-        const queueSlide = () => {
-          clearInterval(slideTimer);
-          slideTimer = setInterval(() => setSlide(slideIndex + 1), DELAY);
+        const restartAutoPlay = () => {
+          clearTimeout(slideTimer);
+          animateProgress();
+          slideTimer = setTimeout(() => {
+            setSlide(slideIndex + 1);
+            restartAutoPlay();
+          }, DELAY);
         };
 
         slideControls.forEach((button) => {
           button.addEventListener("click", () => {
             const direction = button.dataset.slideControl === "next" ? 1 : -1;
             setSlide(slideIndex + direction);
-            queueSlide();
+            restartAutoPlay();
           });
         });
 
         document.addEventListener("visibilitychange", () => {
           if (document.hidden) {
-            clearInterval(slideTimer);
+            clearTimeout(slideTimer);
+            if (progressFill) {
+              progressFill.style.transition = "none";
+              progressFill.style.transform = "scaleX(0)";
+            }
           } else {
-            queueSlide();
+            restartAutoPlay();
           }
         });
 
         setSlide(0);
-        queueSlide();
+        restartAutoPlay();
       }
     </script>
   </body>
