@@ -13,11 +13,6 @@
         font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
       }
 
-      html,
-      body {
-        height: 100%;
-      }
-
       *, *::before, *::after {
         box-sizing: border-box;
       }
@@ -27,7 +22,6 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
         align-items: center;
         background-color: #020203;
         background-image:
@@ -49,30 +43,31 @@
           linear-gradient(135deg, #03030a, #050312 40%, #020203 80%);
         color: #f8f8ff;
         transition: background 120ms ease-out;
-        overflow-x: hidden;
         background-attachment: fixed;
+        overflow-x: hidden;
+        overflow-y: auto;
       }
 
-      body::before {
+      body::before,
+      body::after {
         content: "";
         position: fixed;
         inset: 0;
+        pointer-events: none;
+      }
+
+      body::before {
         background:
           radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 60%)
             repeat;
         mix-blend-mode: soft-light;
         opacity: 0.15;
-        pointer-events: none;
       }
 
       body::after {
-        content: "";
-        position: fixed;
-        inset: 0;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cpath fill='rgba(255,255,255,0.03)' d='M0 0h80v80H0zM80 80h80v80H80z'/%3E%3C/svg%3E");
         opacity: 0.08;
         mix-blend-mode: screen;
-        pointer-events: none;
       }
 
       header {
@@ -87,7 +82,7 @@
         background: rgba(5, 5, 12, 0.6);
         backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        z-index: 2;
+        z-index: 3;
       }
 
       .logo {
@@ -150,8 +145,8 @@
       main {
         text-align: center;
         padding: 7rem 2rem 4rem;
-        max-width: 1000px;
-        width: min(1000px, 100%);
+        max-width: 1080px;
+        width: min(1080px, 100%);
         z-index: 1;
         display: flex;
         flex-direction: column;
@@ -159,7 +154,7 @@
       }
 
       .intro {
-        max-width: 720px;
+        max-width: 760px;
         margin: 0 auto;
       }
 
@@ -202,6 +197,12 @@
         border-radius: 1.5rem;
         box-shadow: 0 18px 45px rgba(3, 3, 10, 0.45);
         backdrop-filter: blur(8px);
+        cursor: pointer;
+      }
+
+      .gallery-card:focus-visible {
+        outline: 2px solid #8fd3ff;
+        outline-offset: 6px;
       }
 
       .gallery-frame {
@@ -220,10 +221,36 @@
         display: block;
       }
 
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.85rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: rgba(255, 255, 255, 0.75);
+        margin-bottom: 0.4rem;
+      }
+
+      .gallery-card h2 {
+        margin: 0 0 0.4rem;
+        font-size: 1.35rem;
+      }
+
+      .gallery-card p {
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.72);
+        line-height: 1.6;
+      }
+
       .lightbox {
         position: fixed;
         inset: 0;
-        background: rgba(2, 2, 10, 0.85);
+        background: rgba(2, 2, 10, 0.88);
         backdrop-filter: blur(8px);
         display: flex;
         align-items: center;
@@ -232,7 +259,7 @@
         opacity: 0;
         pointer-events: none;
         transition: opacity 220ms ease;
-        z-index: 10;
+        z-index: 5;
       }
 
       .lightbox.is-open {
@@ -241,7 +268,7 @@
       }
 
       .lightbox__content {
-        max-width: min(900px, 90vw);
+        max-width: min(900px, 92vw);
         max-height: 90vh;
         display: flex;
         flex-direction: column;
@@ -281,43 +308,8 @@
         border: 1px solid rgba(255, 255, 255, 0.35);
         background: rgba(5, 5, 12, 0.6);
         color: #ffffff;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         cursor: pointer;
-      }
-
-      .pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.35rem;
-        font-size: 0.7rem;
-        letter-spacing: 0.24em;
-        text-transform: uppercase;
-        padding: 0.3rem 0.85rem;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        color: rgba(255, 255, 255, 0.75);
-        margin-bottom: 0.4rem;
-      }
-
-      .gallery-card h2 {
-        margin: 0 0 0.4rem;
-        font-size: 1.35rem;
-      }
-
-      .gallery-card p {
-        font-size: 0.95rem;
-        color: rgba(255, 255, 255, 0.72);
-        line-height: 1.6;
-      }
-
-      .empty-state {
-        grid-column: 1 / -1;
-        padding: 2rem;
-        border: 1px dashed rgba(255, 255, 255, 0.25);
-        border-radius: 1.25rem;
-        color: rgba(255, 255, 255, 0.65);
-        font-size: 1rem;
       }
 
       @media (max-width: 640px) {
@@ -335,6 +327,10 @@
         main {
           padding: 7rem 1.25rem 3rem;
         }
+
+        .gallery-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
@@ -344,7 +340,7 @@
       <nav>
         <a href="gallery.html" aria-current="page">Gallery</a>
         <a href="audio.html">Audio</a>
-        <a href="#templates">Templates</a>
+        <a href="template.html">Templates</a>
       </nav>
     </header>
 
@@ -371,162 +367,32 @@
 
     <script>
       const galleryManifest = [
-        {
-          src: "../gallery/AM_I_A_JOKE_TO_YOU.png",
-          title: "AM I A JOKE TO YOU",
-          medium: "Poster",
-          description: "全大写的质问式倡议，强调每一次行动都值得认真以待。"
-        },
-        {
-          src: "../gallery/为什么要霸凌老师？.png",
-          title: "为什么要霸凌老师？",
-          medium: "Classroom",
-          description: "把课堂里最直接的提问放上展板，守住讨论的底线。"
-        },
-        {
-          src: "../gallery/互动.png",
-          title: "互动",
-          medium: "Chorus",
-          description: "合唱暖身的手势练习，讓舞台外的默契先点燃。"
-        },
-        {
-          src: "../gallery/从学术上判断.png",
-          title: "从学术上判断",
-          medium: "Debate",
-          description: "把学术语言搬进日常，让每个论点都有证据护体。"
-        },
-        {
-          src: "../gallery/低调上_meet.png",
-          title: "低调上 · meet",
-          medium: "Meeting",
-          description: "线上会议的截图式纪念，低调却瞒不住的野心。"
-        },
-        {
-          src: "../gallery/关我屁事.png",
-          title: "关我屁事",
-          medium: "Campaign",
-          description: "用一句俏皮回击冷漠，把旁观者重新拉回现场。"
-        },
-        {
-          src: "../gallery/危.png",
-          title: "危",
-          medium: "Signal",
-          description: "只用一个字提醒，危机意识本身就是设计。"
-        },
-        {
-          src: "../gallery/大展宏圖.png",
-          title: "大展宏圖",
-          medium: "Ambition",
-          description: "复古排版混合手写感，宣示“搞事情”版图继续扩张。"
-        },
-        {
-          src: "../gallery/大胆假设，小心求证。.png",
-          title: "大胆假设，小心求证。",
-          medium: "Workshop",
-          description: "工作坊的精神口号，一半浪漫一半严谨。"
-        },
-        {
-          src: "../gallery/安娣！不要插队！.png",
-          title: "安娣！不要插队！",
-          medium: "Community",
-          description: "菜市场语气的秩序宣导，热闹又有效。"
-        },
-        {
-          src: "../gallery/开席喽.png",
-          title: "开席喽",
-          medium: "Camp Kitchen",
-          description: "生活营开饭瞬间，香气和笑声一起炸裂。"
-        },
-        {
-          src: "../gallery/彻底裂开.png",
-          title: "彻底裂开",
-          medium: "Athletics",
-          description: "赛场上抓到翻车瞬间，笑着复盘才是成长。"
-        },
-        {
-          src: "../gallery/惨.png",
-          title: "惨",
-          medium: "Mood Board",
-          description: "用最夸张的表情管理崩溃，把低谷也晒出来。"
-        },
-        {
-          src: "../gallery/我就是个球.png",
-          title: "我就是个球",
-          medium: "Sports",
-          description: "球场自嘲式宣言，滚动就是一种态度。"
-        },
-        {
-          src: "../gallery/拿淋kok头.png",
-          title: "拿淋 kok 头",
-          medium: "Comedy",
-          description: "把现场的口头梗封存成海报，笑点延长播放。"
-        },
-        {
-          src: "../gallery/正式上课.png",
-          title: "正式上课",
-          medium: "Lecture",
-          description: "开学铃声一响，组织的仪式感就位。"
-        },
-        {
-          src: "../gallery/炸出来.png",
-          title: "炸出来",
-          medium: "Studio",
-          description: "灵感爆炸的那秒，必须截图保留。"
-        },
-        {
-          src: "../gallery/看我大显神威！.png",
-          title: "看我大显神威！",
-          medium: "Performance",
-          description: "舞台前的自我打气，用标点符号加码气势。"
-        },
-        {
-          src: "../gallery/老师关心你.png",
-          title: "老师关心你",
-          medium: "Announcement",
-          description: "温柔版的提醒，严肃议题也能软着陆。"
-        },
-        {
-          src: "../gallery/考试喽！.png",
-          title: "考试喽！",
-          medium: "Academia",
-          description: "在备考倒计时里，幽默感是最好的护身符。"
-        },
-        {
-          src: "../gallery/肖像权.png",
-          title: "肖像权",
-          medium: "Rights",
-          description: "把法律意识放上墙，提醒大家保留同意。"
-        },
-        {
-          src: "../gallery/自强不息.png",
-          title: "自强不息",
-          medium: "Motto",
-          description: "写在旗帜上的日常座右铭，越喊越有力量。"
-        },
-        {
-          src: "../gallery/设备问题.png",
-          title: "设备问题",
-          medium: "Tech",
-          description: "最真实的制作后台：永远有人在 debug。"
-        },
-        {
-          src: "../gallery/误会啦！.png",
-          title: "误会啦！",
-          medium: "Dialogue",
-          description: "用巨幅文字化解尴尬，公开澄清也能很可爱。"
-        },
-        {
-          src: "../gallery/超前部署.png",
-          title: "超前部署",
-          medium: "Strategy",
-          description: "把计划摊在墙上，提前部署才有底气。"
-        },
-        {
-          src: "../gallery/这轮粗.png",
-          title: "这轮粗",
-          medium: "Prototype",
-          description: "粗糙草稿也能进展厅，因为热情本来就长这样。"
-        }
+        { src: "../gallery/AM_I_A_JOKE_TO_YOU.png", title: "AM I A JOKE TO YOU", medium: "Poster", description: "全大写的质问式倡议，强调每一次行动都值得认真以待。" },
+        { src: "../gallery/为什么要霸凌老师？.png", title: "为什么要霸凌老师？", medium: "Classroom", description: "把课堂里最直接的提问放上展板，守住讨论的底线。" },
+        { src: "../gallery/互动.png", title: "互动", medium: "Chorus", description: "合唱暖身的手势练习，让舞台外的默契先点燃。" },
+        { src: "../gallery/从学术上判断.png", title: "从学术上判断", medium: "Debate", description: "把学术语言搬进日常，让每个论点都有证据护体。" },
+        { src: "../gallery/低调上_meet.png", title: "低调上 · meet", medium: "Meeting", description: "线上会议的截图式纪念，低调却瞒不住的野心。" },
+        { src: "../gallery/关我屁事.png", title: "关我屁事", medium: "Campaign", description: "用一句俏皮回击冷漠，把旁观者重新拉回现场。" },
+        { src: "../gallery/危.png", title: "危", medium: "Signal", description: "只用一个字提醒，危机意识本身就是设计。" },
+        { src: "../gallery/大展宏圖.png", title: "大展宏圖", medium: "Ambition", description: "复古排版混合手写感，宣示“搞事情”版图继续扩张。" },
+        { src: "../gallery/大胆假设，小心求证。.png", title: "大胆假设，小心求证。", medium: "Workshop", description: "工作坊的精神口号，一半浪漫一半严谨。" },
+        { src: "../gallery/安娣！不要插队！.png", title: "安娣！不要插队！", medium: "Community", description: "菜市场语气的秩序宣导，热闹又有效。" },
+        { src: "../gallery/开席喽.png", title: "开席喽", medium: "Camp Kitchen", description: "生活营开饭瞬间，香气和笑声一起炸裂。" },
+        { src: "../gallery/彻底裂开.png", title: "彻底裂开", medium: "Athletics", description: "赛场上抓到翻车瞬间，笑着复盘才是成长。" },
+        { src: "../gallery/惨.png", title: "惨", medium: "Mood Board", description: "用最夸张的表情管理崩溃，把低谷也晒出来。" },
+        { src: "../gallery/我就是个球.png", title: "我就是个球", medium: "Sports", description: "球场自嘲式宣言，滚动就是一种态度。" },
+        { src: "../gallery/拿淋kok头.png", title: "拿淋 kok 头", medium: "Comedy", description: "把现场的口头梗封存成海报，笑点延长播放。" },
+        { src: "../gallery/正式上课.png", title: "正式上课", medium: "Lecture", description: "开学铃声一响，组织的仪式感就位。" },
+        { src: "../gallery/炸出来.png", title: "炸出来", medium: "Studio", description: "灵感爆炸的那秒，必须截图保留。" },
+        { src: "../gallery/看我大显神威！.png", title: "看我大显神威！", medium: "Performance", description: "舞台前的自我打气，用标点符号加码气势。" },
+        { src: "../gallery/老师关心你.png", title: "老师关心你", medium: "Announcement", description: "温柔版的提醒，严肃议题也能软着陆。" },
+        { src: "../gallery/考试喽！.png", title: "考试喽！", medium: "Academia", description: "在备考倒计时里，幽默感是最好的护身符。" },
+        { src: "../gallery/肖像权.png", title: "肖像权", medium: "Rights", description: "把法律意识放上墙，提醒大家保留同意。" },
+        { src: "../gallery/自强不息.png", title: "自强不息", medium: "Motto", description: "写在旗帜上的日常座右铭，越喊越有力量。" },
+        { src: "../gallery/设备问题.png", title: "设备问题", medium: "Tech", description: "最真实的制作后台：永远有人在 debug。" },
+        { src: "../gallery/误会啦！.png", title: "误会啦！", medium: "Dialogue", description: "用巨幅文字化解尴尬，公开澄清也能很可爱。" },
+        { src: "../gallery/超前部署.png", title: "超前部署", medium: "Strategy", description: "把计划摊在墙上，提前部署才有底气。" },
+        { src: "../gallery/这轮粗.png", title: "这轮粗", medium: "Prototype", description: "粗糙草稿也能进展厅，因为热情本来就长这样。" }
       ];
 
       const root = document.documentElement;
@@ -541,8 +407,7 @@
 
         const proximityToCenter = 1 - Math.hypot(xPercent - 50, yPercent - 50) / 70;
         const eased = clamp(proximityToCenter, 0, 1) ** 1.5;
-        const intensity =
-          intensityRange[0] + eased * (intensityRange[1] - intensityRange[0]);
+        const intensity = intensityRange[0] + eased * (intensityRange[1] - intensityRange[0]);
         root.style.setProperty("--glow-intensity", intensity.toFixed(3));
       };
 
@@ -567,6 +432,29 @@
       queueUpdate(window.innerWidth / 2, window.innerHeight / 2);
 
       const galleryGrid = document.getElementById("gallery-grid");
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImage = lightbox.querySelector(".lightbox__image");
+      const lightboxTitle = lightbox.querySelector(".lightbox__title");
+      const lightboxMeta = lightbox.querySelector(".lightbox__meta");
+      const closeButton = lightbox.querySelector(".lightbox__close");
+
+      const openLightbox = (index) => {
+        const work = galleryManifest[index];
+        if (!work) return;
+        lightboxImage.src = work.src;
+        lightboxImage.alt = work.title;
+        lightboxTitle.textContent = work.title;
+        lightboxMeta.textContent = work.description;
+        lightbox.classList.add("is-open");
+        closeButton.focus();
+        document.body.style.overflow = "hidden";
+      };
+
+      const closeLightbox = () => {
+        lightbox.classList.remove("is-open");
+        lightboxImage.src = "";
+        document.body.style.overflow = "";
+      };
 
       if (galleryGrid) {
         if (!galleryManifest.length) {
@@ -590,30 +478,6 @@
             )
             .join("");
 
-          const lightbox = document.getElementById("lightbox");
-          const lightboxImage = lightbox.querySelector(".lightbox__image");
-          const lightboxTitle = lightbox.querySelector(".lightbox__title");
-          const lightboxMeta = lightbox.querySelector(".lightbox__meta");
-          const closeButton = lightbox.querySelector(".lightbox__close");
-
-          const openLightbox = (index) => {
-            const work = galleryManifest[index];
-            if (!work) return;
-            lightboxImage.src = work.src;
-            lightboxImage.alt = work.title;
-            lightboxTitle.textContent = work.title;
-            lightboxMeta.textContent = work.description;
-            lightbox.classList.add("is-open");
-            closeButton.focus();
-            document.body.style.overflow = "hidden";
-          };
-
-          const closeLightbox = () => {
-            lightbox.classList.remove("is-open");
-            lightboxImage.src = "";
-            document.body.style.overflow = "";
-          };
-
           galleryGrid.addEventListener("click", (event) => {
             const card = event.target.closest(".gallery-card");
             if (!card) return;
@@ -629,21 +493,21 @@
             const index = Number(card.dataset.workIndex);
             openLightbox(index);
           });
-
-          closeButton.addEventListener("click", closeLightbox);
-          lightbox.addEventListener("click", (event) => {
-            if (event.target === lightbox) {
-              closeLightbox();
-            }
-          });
-
-          document.addEventListener("keydown", (event) => {
-            if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
-              closeLightbox();
-            }
-          });
         }
       }
+
+      closeButton.addEventListener("click", closeLightbox);
+      lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+          closeLightbox();
+        }
+      });
     </script>
   </body>
 </html>

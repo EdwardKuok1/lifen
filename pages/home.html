@@ -154,12 +154,25 @@
         gap: 1.25rem;
       }
 
+      .identity-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+        align-items: stretch;
+      }
+
       .profile-card {
         margin: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 0.85rem;
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+        background: rgba(5, 5, 12, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 15px 35px rgba(2, 2, 3, 0.45);
       }
 
       .profile-card img {
@@ -180,6 +193,37 @@
 
       .hero-copy {
         max-width: 720px;
+      }
+
+      .info-card {
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+        background: rgba(5, 5, 12, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 15px 35px rgba(2, 2, 3, 0.35);
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .info-card small {
+        font-size: 0.75rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.55);
+      }
+
+      .info-card img {
+        width: 100%;
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .location-meta {
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.72);
+        line-height: 1.6;
       }
 
       .eyebrow {
@@ -382,15 +426,32 @@
       <nav>
         <a href="gallery.html">Gallery</a>
         <a href="audio.html">Audio</a>
-        <a href="#templates">Templates</a>
+        <a href="template.html">Templates</a>
       </nav>
     </header>
 
     <main>
-      <figure class="profile-card">
-        <img src="../img/deng-li-fen.jpeg" alt="Portrait of Deng Li Fen" />
-        <figcaption>Li-Fen Studio</figcaption>
-      </figure>
+      <section class="identity-grid" aria-label="Identity and location">
+        <figure class="profile-card">
+          <img src="../img/profile.png" alt="Portrait of Li-Fen" />
+          <figcaption>Li-Fen Studio</figcaption>
+        </figure>
+
+        <article class="info-card">
+          <img src="../img/googleearth.png" alt="Studio location preview from Google Earth" />
+          <div>
+            <small>Studio address</small>
+            <h3>Li-Fen Collective HQ</h3>
+            <p class="location-meta">
+              柔佛 · 新山｜Taman Molek<br />
+              社区活动、营会策划与厨房实验的临时指挥中心。
+            </p>
+          </div>
+          <a class="cta secondary" href="https://earth.google.com/" target="_blank" rel="noreferrer"
+            >Open in Google Earth</a
+          >
+        </article>
+      </section>
 
       <section class="hero-copy">
         <p class="eyebrow">Curated chaos · 2025</p>
