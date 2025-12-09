@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>丽芬home</title>
+    <title>丽芬 · Audio</title>
     <style>
       :root {
         --cursor-x: 50%;
@@ -144,37 +144,80 @@
       main {
         text-align: center;
         padding: 6rem 1rem 3rem;
-        max-width: 720px;
+        max-width: 960px;
+        width: min(960px, 100%);
         z-index: 1;
       }
 
       h1 {
-        font-size: clamp(2.75rem, 5vw, 4.25rem);
+        font-size: clamp(2.4rem, 4vw, 3.75rem);
         margin-bottom: 1rem;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.02em;
       }
 
       p {
-        font-size: clamp(1rem, 2vw, 1.35rem);
+        font-size: clamp(1rem, 2vw, 1.25rem);
         color: rgba(255, 255, 255, 0.8);
         line-height: 1.7;
         margin-bottom: 2.5rem;
       }
 
-      .cta {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        padding: 0.9rem 1.75rem;
-        border-radius: 999px;
-        background: linear-gradient(120deg, #6b8cff, #d374ff);
-        color: #050505;
+      .audio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2.5rem;
+      }
+
+      .track-card {
+        background: rgba(4, 4, 12, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 1.5rem;
+        padding: 1.5rem;
+        text-align: left;
+        box-shadow: 0 15px 35px rgba(5, 10, 40, 0.35);
+        backdrop-filter: blur(8px);
+      }
+
+      .track-label {
         text-transform: uppercase;
-        letter-spacing: 0.08em;
-        font-size: 0.85rem;
-        font-weight: 700;
+        letter-spacing: 0.2em;
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin: 0 0 0.35rem;
+      }
+
+      .track-card h2 {
+        margin: 0 0 0.35rem;
+        font-size: 1.4rem;
+      }
+
+      .track-duration {
+        margin: 0;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      audio {
+        width: 100%;
+        margin-top: 1rem;
+        filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.35));
+      }
+
+      .track-actions {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .download {
         text-decoration: none;
-        box-shadow: 0 10px 35px rgba(91, 122, 255, 0.35);
+        color: #89c7ff;
+        font-weight: 600;
+        letter-spacing: 0.04em;
       }
 
       @media (max-width: 640px) {
@@ -188,6 +231,10 @@
           flex-wrap: wrap;
           justify-content: center;
         }
+
+        .audio-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
@@ -196,22 +243,46 @@
       <a class="logo" href="home.html" aria-label="返回首页">EDWARD</a>
       <nav>
         <a href="#gallery">Gallery</a>
-        <a href="audio.html">Audio</a>
+        <a href="audio.html" aria-current="page">Audio</a>
         <a href="#templates">Templates</a>
       </nav>
     </header>
 
     <main>
-      <h1>丽芬姐搞事情</h1>
+      <h1>声场档案 · Audio Playground</h1>
       <p>
-        活躍分子<br />
-        “真正的人脉就是搞组织”<br />
-        合唱团 · 副总干事<br />
-        全柔独中田径比赛多项奖牌<br />
-        大学铁饼比赛冠军<br />
-        生活营 · 主厨：第一次煮饭，一百多人的饭没有煮焦
+        两段录音、两种心情。从环境采样到口语片段，把它们放在同一个暗夜舞台任你挑选、循环与下载。
       </p>
-      <a class="cta" href="#explore">Explore the content</a>
+
+      <section class="audio-grid">
+        <article class="track-card">
+          <p class="track-label">Field Recording</p>
+          <h2>Dog Bark Sketch</h2>
+          <p class="track-duration">dog_bark.mp3</p>
+          <audio controls preload="metadata">
+            <source src="../audio/dog_bark.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+          <div class="track-actions">
+            <span>Raw ambience</span>
+            <a class="download" href="../audio/dog_bark.mp3" download>Download</a>
+          </div>
+        </article>
+
+        <article class="track-card">
+          <p class="track-label">Spoken Moment</p>
+          <h2>今天上到这里</h2>
+          <p class="track-duration">今天上到这里.mp3</p>
+          <audio controls preload="metadata">
+            <source src="../audio/今天上到这里.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+          <div class="track-actions">
+            <span>Closing words</span>
+            <a class="download" href="../audio/今天上到这里.mp3" download>Download</a>
+          </div>
+        </article>
+      </section>
     </main>
 
     <script>
