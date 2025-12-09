@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>丽芬home</title>
+    <title>丽芬 · Home</title>
     <style>
       :root {
         --cursor-x: 50%;
@@ -90,6 +90,16 @@
         font-size: 0.9rem;
         font-weight: 600;
         color: #dfe6ff;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: color 180ms ease-out;
+      }
+
+      .logo:hover,
+      .logo:focus-visible {
+        color: #ffffff;
       }
 
       nav {
@@ -119,12 +129,14 @@
       }
 
       nav a:hover,
-      nav a:focus-visible {
+      nav a:focus-visible,
+      nav a[aria-current="page"] {
         color: #ffffff;
       }
 
       nav a:hover::after,
-      nav a:focus-visible::after {
+      nav a:focus-visible::after,
+      nav a[aria-current="page"]::after {
         opacity: 1;
         transform: scaleX(1);
       }
@@ -181,10 +193,10 @@
   </head>
   <body>
     <header>
-      <div class="logo">EDWARD</div>
+      <a class="logo" href="home.html" aria-label="返回首页">EDWARD</a>
       <nav>
         <a href="#gallery">Gallery</a>
-        <a href="#audio">Audio</a>
+        <a href="audio.html">Audio</a>
         <a href="#templates">Templates</a>
       </nav>
     </header>
@@ -192,11 +204,11 @@
     <main>
       <h1>丽芬姐搞事情</h1>
       <p>
-        活躍分子<br>
-        “真正的人脉就是搞组织”<br>
-        合唱团 · 副总干事<br>
-        全柔独中田径比赛多项奖牌<br>
-        大学铁饼比赛冠军<br>
+        活躍分子<br />
+        “真正的人脉就是搞组织”<br />
+        合唱团 · 副总干事<br />
+        全柔独中田径比赛多项奖牌<br />
+        大学铁饼比赛冠军<br />
         生活营 · 主厨：第一次煮饭，一百多人的饭没有煮焦
       </p>
       <a class="cta" href="#explore">Explore the content</a>
