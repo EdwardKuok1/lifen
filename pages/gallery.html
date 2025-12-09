@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>丽芬 · Audio</title>
+    <title>丽芬 · Gallery</title>
     <style>
       :root {
         --cursor-x: 50%;
@@ -143,81 +143,123 @@
 
       main {
         text-align: center;
-        padding: 6rem 1rem 3rem;
-        max-width: 960px;
-        width: min(960px, 100%);
+        padding: 7rem 2rem 4rem;
+        max-width: 1100px;
+        width: min(1100px, 100%);
         z-index: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .intro {
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      .eyebrow {
+        font-size: 0.85rem;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 0.75rem;
       }
 
       h1 {
-        font-size: clamp(2.4rem, 4vw, 3.75rem);
+        font-size: clamp(2.5rem, 4.5vw, 3.85rem);
         margin-bottom: 1rem;
         letter-spacing: -0.02em;
       }
 
       p {
-        font-size: clamp(1rem, 2vw, 1.25rem);
-        color: rgba(255, 255, 255, 0.8);
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        color: rgba(255, 255, 255, 0.82);
         line-height: 1.7;
-        margin-bottom: 2.5rem;
+        margin: 0;
       }
 
-      .audio-grid {
+      .gallery-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-        margin-top: 2.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.75rem;
       }
 
-      .track-card {
-        background: rgba(4, 4, 12, 0.7);
+      .gallery-card {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        text-align: left;
+        padding: 1.25rem;
+        background: rgba(5, 5, 12, 0.7);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 1.5rem;
-        padding: 1.5rem;
-        text-align: left;
-        box-shadow: 0 15px 35px rgba(5, 10, 40, 0.35);
+        box-shadow: 0 18px 45px rgba(3, 3, 10, 0.45);
         backdrop-filter: blur(8px);
       }
 
-      .track-label {
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        font-size: 0.7rem;
-        color: rgba(255, 255, 255, 0.6);
-        margin: 0 0 0.35rem;
+      .gallery-frame {
+        border-radius: 1rem;
+        overflow: hidden;
+        position: relative;
+        aspect-ratio: 4 / 5;
+        background: rgba(255, 255, 255, 0.05);
       }
 
-      .track-card h2 {
-        margin: 0 0 0.35rem;
-        font-size: 1.4rem;
+      .gallery-frame::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 1rem;
+        pointer-events: none;
       }
 
-      .track-duration {
-        margin: 0;
-        font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.6);
-      }
-
-      audio {
+      .gallery-frame img {
         width: 100%;
-        margin-top: 1rem;
-        filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.35));
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 400ms ease-out;
       }
 
-      .track-actions {
-        margin-top: 1rem;
-        display: flex;
-        justify-content: space-between;
+      .gallery-card:hover .gallery-frame img {
+        transform: scale(1.05);
+      }
+
+      .pill {
+        display: inline-flex;
         align-items: center;
-        font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.7);
+        gap: 0.35rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.85rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: rgba(255, 255, 255, 0.75);
+        margin-bottom: 0.4rem;
       }
 
-      .download {
-        text-decoration: none;
-        color: #89c7ff;
-        font-weight: 600;
-        letter-spacing: 0.04em;
+      .gallery-card h2 {
+        margin: 0 0 0.4rem;
+        font-size: 1.35rem;
+      }
+
+      .gallery-card p {
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.72);
+        line-height: 1.6;
+      }
+
+      .empty-state {
+        grid-column: 1 / -1;
+        padding: 2rem;
+        border: 1px dashed rgba(255, 255, 255, 0.25);
+        border-radius: 1.25rem;
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 1rem;
       }
 
       @media (max-width: 640px) {
@@ -232,8 +274,8 @@
           justify-content: center;
         }
 
-        .audio-grid {
-          grid-template-columns: 1fr;
+        main {
+          padding: 7rem 1.25rem 3rem;
         }
       }
     </style>
@@ -242,48 +284,64 @@
     <header>
       <a class="logo" href="home.html" aria-label="返回首页">EDWARD</a>
       <nav>
-        <a href="gallery.html">Gallery</a>
-        <a href="audio.html" aria-current="page">Audio</a>
+        <a href="gallery.html" aria-current="page">Gallery</a>
+        <a href="audio.html">Audio</a>
         <a href="#templates">Templates</a>
       </nav>
     </header>
 
     <main>
-      <h1>声场档案 · Audio Playground</h1>
-      <p>
-        两段录音、两种心情。从环境采样到口语片段，把它们放在同一个暗夜舞台任你挑选、循环与下载。
-      </p>
-
-      <section class="audio-grid">
-        <article class="track-card">
-          <p class="track-label">Field Recording</p>
-          <h2>Dog Bark Sketch</h2>
-          <p class="track-duration">dog_bark.mp3</p>
-          <audio controls preload="metadata">
-            <source src="../audio/dog_bark.mp3" type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
-          <div class="track-actions">
-            <span>Raw ambience</span>
-            <a class="download" href="../audio/dog_bark.mp3" download>Download</a>
-          </div>
-        </article>
-
-        <article class="track-card">
-          <p class="track-label">Spoken Moment</p>
-          <h2>今天上到这里</h2>
-          <p class="track-duration">今天上到这里.mp3</p>
-          <audio controls preload="metadata">
-            <source src="../audio/今天上到这里.mp3" type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
-          <div class="track-actions">
-            <span>Closing words</span>
-            <a class="download" href="../audio/今天上到这里.mp3" download>Download</a>
-          </div>
-        </article>
+      <section class="intro">
+        <p class="eyebrow">Museum log</p>
+        <h1>Li-Fen Exhibition Chronicle</h1>
+        <p>
+          一墙一景，都是丽芬姐的舞台。沉浸式的视觉档案室里，放大每一次活动、每一句口号、每一个眼神，用光影做纪念。
+        </p>
       </section>
+
+      <section class="gallery-grid" id="gallery-grid" aria-live="polite"></section>
     </main>
+
+    <script id="gallery-data" type="application/json">
+      [
+        {
+          "src": "../slideshow/互动.png",
+          "title": "互动",
+          "medium": "Chorus",
+          "description": "舞台下的互动练习，捕捉组织力的火花。"
+        },
+        {
+          "src": "../slideshow/大胆假设，小心求证。.png",
+          "title": "大胆假设，小心求证。",
+          "medium": "Workshop",
+          "description": "策展会议的一角，用笑声把复杂议题拆解成灵感。"
+        },
+        {
+          "src": "../slideshow/开席喽.png",
+          "title": "开席喽",
+          "medium": "Camp Kitchen",
+          "description": "生活营的第一锅佳肴，兼顾温度与速度的厨房现场。"
+        },
+        {
+          "src": "../slideshow/彻底裂开.png",
+          "title": "彻底裂开",
+          "medium": "Athletics",
+          "description": "田径赛后定格的瞬间，力量与幽默同框。"
+        },
+        {
+          "src": "../slideshow/考试喽！.png",
+          "title": "考试喽！",
+          "medium": "Academia",
+          "description": "备考夜的集体自习，把压力变成集结号。"
+        },
+        {
+          "src": "../slideshow/这轮粗.png",
+          "title": "这轮粗",
+          "medium": "Studio",
+          "description": "头脑风暴后的成果墙，粗糙但真诚的第一稿。"
+        }
+      ]
+    </script>
 
     <script>
       const root = document.documentElement;
@@ -322,6 +380,41 @@
       });
 
       queueUpdate(window.innerWidth / 2, window.innerHeight / 2);
+
+      const galleryDataElement = document.getElementById("gallery-data");
+      const galleryGrid = document.getElementById("gallery-grid");
+
+      if (galleryDataElement && galleryGrid) {
+        try {
+          const works = JSON.parse(galleryDataElement.textContent.trim());
+          if (!works.length) {
+            galleryGrid.innerHTML =
+              '<div class="empty-state">Upload images to the gallery folder to populate this wall.</div>';
+            return;
+          }
+
+          galleryGrid.innerHTML = works
+            .map(
+              (work) => `
+                <figure class="gallery-card">
+                  <div class="gallery-frame">
+                    <img src="${work.src}" alt="${work.title}" loading="lazy" />
+                  </div>
+                  <figcaption>
+                    <p class="pill">${work.medium}</p>
+                    <h2>${work.title}</h2>
+                    <p>${work.description}</p>
+                  </figcaption>
+                </figure>
+              `
+            )
+            .join("");
+        } catch (error) {
+          galleryGrid.innerHTML =
+            '<div class="empty-state">Unable to load gallery manifest.</div>';
+          console.error("Gallery manifest error", error);
+        }
+      }
     </script>
   </body>
 </html>
