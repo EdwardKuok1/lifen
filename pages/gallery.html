@@ -22,7 +22,7 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         background-color: #020203;
         background-image:
@@ -44,7 +44,8 @@
           linear-gradient(135deg, #03030a, #050312 40%, #020203 80%);
         color: #f8f8ff;
         transition: background 120ms ease-out;
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
       }
 
       body::before {
